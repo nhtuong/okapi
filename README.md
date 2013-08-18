@@ -1,6 +1,6 @@
 OKAPI
 =====
-
+![OKAPI](src/images/ico/extra/micro-human-mice.gif "OKAPI")
 Okapi is an integrated data mining toolkit. 
 
 Features:
