@@ -28,23 +28,19 @@ import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.commons.math.stat.correlation.PearsonsCorrelation;
-
-public class Correlation extends JDialog {
+public class TestR extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField tfX;
-	private JTextField tfY;
 	public String inFile;
 	public String inPath;
 	
@@ -56,13 +52,15 @@ public class Correlation extends JDialog {
 	public StringMatrix datmat;
 	private JComboBox cbX;
 	private JComboBox cbY;
-
+	public String cmd;
+	public String outfile;
+	private JComboBox cbTypeTest;
 	/**
 	 * Create the dialog.
 	 */
-	public Correlation() {
+	public TestR(final MainFrame mf) {
 
-		setTitle("Correlation");
+		setTitle("Pairewise Testing...");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("src/images/ico/extra/science_32.png"));
 		setBounds(100, 100, 450, 140);
 		getContentPane().setLayout(new BorderLayout());
@@ -77,24 +75,6 @@ public class Correlation extends JDialog {
 		JLabel lblIy = new JLabel("Y:");
 		lblIy.setBounds(286, 11, 46, 14);
 		contentPanel.add(lblIy);
-		
-		JLabel lblX = new JLabel("X Label:");
-		lblX.setBounds(83, 44, 88, 14);
-		contentPanel.add(lblX);
-		
-		tfX = new JTextField();
-		tfX.setBounds(128, 41, 104, 23);
-		contentPanel.add(tfX);
-		tfX.setColumns(10);
-		
-		JLabel lblY = new JLabel("Y Label:");
-		lblY.setBounds(260, 44, 82, 14);
-		contentPanel.add(lblY);
-		
-		tfY = new JTextField();
-		tfY.setBounds(307, 41, 104, 23);
-		contentPanel.add(tfY);
-		tfY.setColumns(10);
 		{
 			JButton okButton = new JButton("OK");
 			okButton.addActionListener(new ActionListener() {
@@ -111,10 +91,42 @@ public class Correlation extends JDialog {
 						Y[i] = Double.valueOf(datmat.getColumnElements(cbY.getSelectedIndex())[i]);
 					}					
 					
-					Plot plotxy = new Plot(X,Y,tfX.getText(),tfY.getText(),"("+tfX.getText()+","+tfY.getText()+")","Correlation","r="+new PearsonsCorrelation().correlation(X, Y));
-					plotxy.pack();
-					plotxy.setVisible(true);
+					mf.rs.set("x", X);
+					mf.rs.set("y", Y);
+					mf.rs.set("xlab", cbY.getSelectedItem().toString());
+					mf.rs.set("ylab", cbY.getSelectedItem().toString());
 					
+					mf.rs.eval("cor<-cor(x,y)");
+					
+					
+					//mf.rs.set("df", new double[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}}, "x1", "x2", "x3"); //create data frame from given vectors
+					String cmd1 = "plot(x,y,main=paste(\"r=\",cor),xlab=xlab,ylab=ylab)";
+					if (cbTypeTest.getSelectedItem().toString()=="t Student")
+						cmd  = "t.test(x,y)";
+					if (cbTypeTest.getSelectedItem().toString()=="Wilcoxon")
+						cmd  = "wilcox.test(x,y)";
+
+					
+					outfile = "data/plot.jpg";
+					mf.rs.toJPEG(new File(outfile), 400, 400, cmd1); //create jpeg file from R graphical command (like plot)
+		            
+		        	OutputGraph og = new OutputGraph("Output Graph",outfile);
+
+		        	og.dialog.setVisible(true);
+		        	
+		        	
+		        	String html = mf.rs.asString(cmd); //format in html using R2HTML
+		  
+
+
+		            Output outputdiag = new Output("");
+		            //outputdiag.display.append(mean);
+		            outputdiag.display.append("\n");
+		            outputdiag.display.append(html);
+		            
+		            
+		            
+		            
 					//System.out.println(Arrays.toString(datmat.getColumnElements(1)));
 					
 					
@@ -207,6 +219,18 @@ public class Correlation extends JDialog {
 		cbY = new JComboBox();
 		cbY.setBounds(307, 8, 104, 20);
 		contentPanel.add(cbY);
+		
+		cbTypeTest = new JComboBox();
+		cbTypeTest.setBounds(203, 42, 129, 20);
+		cbTypeTest.addItem("t Student");
+		cbTypeTest.addItem("Wilcoxon");
+		contentPanel.add(cbTypeTest);
+		
+		
+		
+		JLabel lblTypeOfTest = new JLabel("Type of test:");
+		lblTypeOfTest.setBounds(120, 45, 104, 14);
+		contentPanel.add(lblTypeOfTest);
 
 	}
 	

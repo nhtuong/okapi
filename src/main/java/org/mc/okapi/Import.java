@@ -94,8 +94,7 @@ public class Import extends JFrame {
 				if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					
 					String workingdir = chooser.getCurrentDirectory().getPath();
-					System.out.println(workingdir);
-					
+					System.out.println(workingdir);					
 					chooser.setCurrentDirectory(new File(workingdir));
 				  	
 				  	datafile = chooser.getSelectedFile().getAbsolutePath();
@@ -107,11 +106,11 @@ public class Import extends JFrame {
 				
 			}
 		});
-		btnBrowse.setBounds(261, 32, 89, 23);
+		btnBrowse.setBounds(261, 30, 89, 25);
 		contentPane.add(btnBrowse);
 		
 		tffilename = new JTextField();
-		tffilename.setBounds(87, 33, 176, 20);
+		tffilename.setBounds(87, 30, 176, 23);
 		contentPane.add(tffilename);
 		tffilename.setColumns(10);
 		

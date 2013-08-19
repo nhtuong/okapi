@@ -48,9 +48,9 @@ public class Output extends JFrame {
 	    // create the middle panel components
 
 	    display = new JTextArea ( 16, 58 );
-	    display.setEditable ( false ); // set textArea non-editable
+	    //display.setEditable ( false ); // set textArea non-editable
 	    display.setLineWrap(true);
-	    display.setWrapStyleWord(true);
+	    //display.setWrapStyleWord(true);
 	    
 	    display.append(content);
 	    JScrollPane scroll = new JScrollPane ( display );

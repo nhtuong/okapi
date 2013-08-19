@@ -53,5 +53,18 @@ Correlation:
 
 ![OKAPI](src/images/screenshot/4-tools-correlation-5.png "OKAPI")
 
+R Connector:
+
+![OKAPI](src/images/screenshot/5-R-connector-1.png "OKAPI")
+
+![OKAPI](src/images/screenshot/5-R-connector-2.png "OKAPI")
+
+![OKAPI](src/images/screenshot/5-R-connector-3.png "OKAPI")
+
+![OKAPI](src/images/screenshot/5-R-connector-4.png "OKAPI")
+
+![OKAPI](src/images/screenshot/5-R-connector-5.png "OKAPI")
+
+![OKAPI](src/images/screenshot/5-R-connector-6.png "OKAPI")
 
 

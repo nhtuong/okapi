@@ -1,0 +1,103 @@
+ID,LastName, FirstName, EmailAddress,Dept
+9021,Steffen,Britta,bs@proctinator.com,PE
+1725,Phelps,Michael ,mp@proctinator.com,PE
+8957,Nadal,Rafael,nadal@proctinator.com,PE
+5073,Rogers,Todd,toddr@proctinator.com,PE
+7252,Bolt,Usain,bolt@proctinator.com,PE
+1536,Barry,Jan,jb@proctinator.com,SPECIALED
+8110,Bush,George W. ,bush1@proctinator.com,SocialStudies
+4690,Clinton,William ,bill@proctinator.com,SocialStudies
+7522,Reagan,Ronald ,rr@proctinator.com,SocialStudies
+6522,Carter,James ,carter@proctinator.com,SocialStudies
+3446,Ford,Gerald R. ,ford@proctinator.com,SocialStudies
+3039,Bush,George H. W. ,bush2@proctinator.com,SocialStudies
+9248,Kennedy,John F. ,jfk@proctinator.com,SocialStudies
+9579,Catanzariti,Michelle,cat@proctinator.com,SPECIALED
+3516,Wolfram,Stephen,sw@proctinator.com,Math
+9745,Perelman,Grigori,gp@proctinator.com,Math
+6926,Tao,Terence,tSquared@proctinator.com ,Math
+7516,Erdos,Paul,erdos@proctinator.com,Math
+6129,Bernoulli,Johann, jb@proctinator.com,Math
+8291,Poincare,Henri, henri@proctinator.com,Math
+3668,Lagrange,Joseph-Louis , integrate@proctinator.com,Math
+7517,Hilbert,David,hibertSpace@proctinator.com,Math
+3226,Leibniz,Gottfried Wilhelm,calc@proctinator.com,Math
+1141,Grothendieck,Alex,alex@proctinator.com,Math
+3813,Laplace,Pierre-Simon,transforms@proctinator.com,Math
+4445,Fourier,Jean Baptiste,Joseph sine@proctinator.com,Math
+7593,Picasso,Pablo ,nomail@proctinator.com,Art
+6087,Gauguin,Paul ,nomail@proctinator.com,Art
+9410,Cezanne,Paul ,nomail@proctinator.com,Art
+3294,van Gogh,Vincent ,nomail@proctinator.com,Art
+9536,Degas,Edgar ,nomail@proctinator.com,Art
+6388,Monet,Claude ,nomail@proctinator.com,Art
+9258,Germanotta,Stefani Joanne,nomail@proctinator.com,Music
+5371,Vedder,Eddie ,nomail@proctinator.com,Music
+4684,Perry,Katy ,nomail@proctinator.com,Music
+2070,Lee,Getty,nomail@proctinator.com,Music
+1089,Mars,Bruno ,nomail@proctinator.com,Music
+8754,Lopez,Jennifer ,nomail@proctinator.com,Music
+4602,Sumner,Gordon M. ,nomail@proctinator.com,Music
+9862,Tyler,Steven,nomail@proctinator.com,Music
+3452,Geddes,Ann,nomail@proctinator.com,Art
+8973,Geim,Andre ,nomail@proctinator.com,Science
+4678,Novoselov,Konstantin ,nomail@proctinator.com,Science
+6212,Heck,Richard,nomail@proctinator.com,Science
+5669,Negishi,Ei-ichi ,nomail@proctinator.com,Science
+1116,Suzuki,Akira ,nomail@proctinator.com,Science
+3323,Richter,Charles Francis,nomail@proctinator.com,Science
+5937,Oppenheimer,Robert ,nomail@proctinator.com,Science
+4599,Mendeleev,Dmitri Ivanovich ,nomail@proctinator.com,Science
+4517,Leeuwenhoek,Anthony ,nomail@proctinator.com,Science
+4827,Ernst von Baer,Karl ,nomail@proctinator.com,Science
+8111,Baltimore,David ,nomail@proctinator.com,Science
+5535,Beadle,George ,nomail@proctinator.com,Science
+1389,Patrinos,Ari ,nomail@proctinator.com,Science
+5046,Collins,Francis,nomail@proctinator.com,Science
+9966,Miescher,Friedrich,nomail@proctinator.com,Science
+9889,Watson,James,nomail@proctinator.com,Science
+1918,Lambot, Scott,nomail@proctinator.com,SPECIALED
+7119,LaRochester, Gary,nomail@proctinator.com,SPECIALED
+7960,Leddy,Edward,nomail@proctinator.com,SPECIALED
+5738,Leemon, Daniel,nomail@proctinator.com,SPECIALED
+9239,Erin,Joe,nomail@proctinator.com,SPECIALED
+8243,Lillo,Enza,nomail@proctinator.com,SPECIALED
+3018,Lishansky,Katie,nomail@proctinator.com,SPECIALED
+5016,Livingston,Neal,nomail@proctinator.com,SPECIALED
+4875,Ki-moon,Ban,nomail@proctinator.com,LOTE
+3562,Annan,Kofi,nomail@proctinator.com,LOTE
+3848,Boutros-Ghali,Boutros,nomail@proctinator.com,LOTE
+4464,Waldheim,Kurt,nomail@proctinator.com,LOTE
+5997,Amos,Valerie,nomail@proctinator.com,LOTE
+5296,McGraw,Dr. Phil,nomail@proctinator.com,guidance
+8676,Millman,Dan ,nomail@proctinator.com,guidance
+9652,Proctor,Bob ,nomail@proctinator.com,guidance
+2424,Robbins ,Anthony,nomail@proctinator.com,guidance
+5331,Morgan,Tracey,nomail@proctinator.com,guidance
+5194,Winfrey,Oprah,nomail@proctinator.com,guidance
+2402,Adams,Douglas,dadams@answeris42.net,English
+7863,Cook,Robin,robinCook@medicalThriller.info,English
+7788,Crichton,Michael ,mc@sciFit.author,English
+9115,Richmond,Michelle,mr@greatBooks.author,English
+6406,Beukes,Lauren,author@lbeukes.com,English
+9975,Dickens,Charles,cd@classics.net,English
+9800,Steinbeck,John,js@classics.net,English
+5004,Page,Larry,nomail@proctinator.com,Other
+9462,Allan,Paul,paul@gmail.com,Other
+*Subs,,,,
+1719,Benjamin,Arthur,nomail@proctinator.com,Math
+9381,Piutti,Anna ,nomail@proctinator.com,LOTE
+6072,Levi,Primo,nomail@proctinator.com,LOTE
+3742,Rice,Condoleezza,nomail@proctinator.com,SocialStudies
+9233,Powell,Colin ,nomail@proctinator.com,SocialStudies
+2976,Albright,Madeleine ,nomail@proctinator.com,SocialStudies
+7292,Christopher,Warren,nomail@proctinator.com,SocialStudies
+*TeacherAssistants,,,,
+2570,Marinos, Ashley,nomail@proctinator.com,other
+6314,Lembo, Lindsay,nomail@proctinator.com,SocialStudies
+8824,Soileau, Rebecca,nomail@proctinator.com,math
+3248,Adams, Maureen,nomail@proctinator.com,
+*TeacherAids,,,,
+2563,Harvey, Linda,nomail@proctinator.com,
+4002,Mori, Frances,nomail@proctinator.com,
+9512,Mendolia,Jack,nomail@proctinator.com,

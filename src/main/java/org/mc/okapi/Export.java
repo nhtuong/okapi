@@ -25,20 +25,45 @@ Hoai-Tuong Nguyen <hoai-tuong.nguyen@inserm.fr>
 package org.mc.okapi;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.factories.FormFactory;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.SpringLayout;
+
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import javax.swing.BoxLayout;
+
+import java.awt.CardLayout;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import net.miginfocom.swing.MigLayout;
+
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Export extends JDialog {
 
@@ -69,7 +94,7 @@ public class Export extends JDialog {
 		}
 		
 		tfpath = new JTextField();
-		tfpath.setBounds(129, 12, 203, 20);
+		tfpath.setBounds(129, 11, 203, 23);
 		tfpath.setColumns(10);
 		
 		JLabel label = new JLabel("");

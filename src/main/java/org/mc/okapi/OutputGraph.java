@@ -26,17 +26,19 @@ package org.mc.okapi;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-public class OutputGraph {
-	public OutputGraph(String img){
-    	JDialog dialog = new JDialog();
+public class OutputGraph extends JFrame  {
+	public JFrame dialog;
+	public OutputGraph(String title, String img){
+		dialog = new JFrame();
     	JLabel label = new JLabel();
     	label.setIcon(new ImageIcon(img));
-    	dialog.setLocationRelativeTo(null);
-    	dialog.setTitle("Output...");
+    	dialog.setTitle(title);
     	dialog.add(label);
     	dialog.pack();
-    	dialog.setVisible(true);
+    	
 	}
 }

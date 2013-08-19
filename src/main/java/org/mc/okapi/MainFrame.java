@@ -25,46 +25,81 @@ Hoai-Tuong Nguyen <hoai-tuong.nguyen@inserm.fr>
 package org.mc.okapi;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.EventQueue;
 
-import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.undo.UndoManager;
 
+import org.apache.commons.math.linear.BigMatrix;
+import org.apache.commons.math3.linear.FieldMatrix;
+import org.apache.commons.math3.linear.MatrixUtils;
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.stat.StatUtils;
+import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
+import org.apache.commons.math3.stat.inference.TestUtils;
 import org.math.R.RserverConf;
 import org.math.R.Rsession;
+import org.rosuda.REngine.REXPMismatchException;
 
-public class MainFrame extends JFrame{
+import au.com.bytecode.opencsv.CSVReader;
+
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyListener;
+import java.util.Arrays;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.awt.Toolkit;
+import java.awt.Rectangle;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.swing.table.*;
+import javax.swing.undo.UndoManager;
+
+import static org.math.R.Rsession.*;
+
+public class MainFrame extends JFrame implements KeyListener{
 
 	 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7145732470962037385L;
 	public JPanel contentPane;
 	public JScrollPane tabledata;
 	public String datafile;
@@ -95,6 +130,9 @@ public class MainFrame extends JFrame{
 	private ExcelAdapter excelTable;
 	public UndoManager ud;
 	public UndoManagerTableModel udm;
+	
+	public OutputGraph load;
+	private TestR tr;
 	
 	/**
 	 * Create the frame.
@@ -130,13 +168,14 @@ public class MainFrame extends JFrame{
 		imp = new Import(this);
 		
 		mntmImport.addActionListener(new ActionListener() {
+			@SuppressWarnings("null")
 			public void actionPerformed(ActionEvent arg0) {
 				  try {
 					  
 					   // fc.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
 					  	
 					  	
-			
+					  
 						
 						
 
@@ -196,7 +235,14 @@ public class MainFrame extends JFrame{
 		mnEdit.setMnemonic('E');
 		menuBar.add(mnEdit);
 		
-      
+	      KeyStroke undo = KeyStroke.getKeyStroke(KeyEvent.VK_Z,ActionEvent.CTRL_MASK,false);
+
+	      KeyStroke redo = KeyStroke.getKeyStroke(KeyEvent.VK_Y,ActionEvent.CTRL_MASK,false);
+	
+	     
+	      addKeyListener(this);
+
+	      
 		mntmUndo = new JMenuItem("Undo");
 		mntmUndo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -279,6 +325,7 @@ public class MainFrame extends JFrame{
 		mnTwowayAnalysis.setIcon(new ImageIcon("src/images/ico/extra/two-way.jpeg"));
 		
 		JMenuItem mntmPiechart = new JMenuItem("PieChart");
+		mntmPiechart.setEnabled(false);
 		mnTwowayAnalysis.add(mntmPiechart);
 		mntmPiechart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -360,30 +407,44 @@ public class MainFrame extends JFrame{
 		mnR.setIcon(new ImageIcon("src/images/ico/extra/r.png"));
 		mnR.setEnabled(false);
 		
+		tr = new TestR(this);
 		
-		mntmPlotR = new JMenuItem("Plot R");
+		mntmPlotR = new JMenuItem("Statistical Testing");
 		mnR.add(mntmPlotR);
 		mntmPlotR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				rs.set("df", new double[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}}, "x1", "x2", "x3"); //create data frame from given vectors
+				/*rs.set("df", new double[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}}, "x1", "x2", "x3"); //create data frame from given vectors
 				cmd = "plot(rnorm(100))";
 				outfile = "data/plot.jpg";
 	        	rs.toJPEG(new File(outfile), 400, 400, cmd); //create jpeg file from R graphical command (like plot)
 	            
-	        	new OutputGraph(outfile);
+	        	OutputGraph og = new OutputGraph("Output Graph",outfile);*/
+				
+				tr.inFile = datafile;
+				tr.data = data;
+				tr.tw = tw;
+				tr.datmat = datmat;
+				
+				tr.setValues();			
+				
+				tr.setVisible(true);
 	        	 
 	        	 
-	         	 
-	        	String html = rs.asHTML("rnorm(100)"); //format in html using R2HTML
-	    
 	        	
+	        	/*String mean = "";
+				try {
+					mean = rs.eval("min(10,2,3)").asString();
+				} catch (REXPMismatchException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}*/
 
+	        	 
 
-	            Output outputdiag = new Output("");
-	            //outputdiag.display.append(mean);
-	            outputdiag.display.append("\n");
-	            outputdiag.display.append(html);
+	            
+	            
+	            
 			}
 		});
 		mntmPlotR.setEnabled(false);
@@ -393,14 +454,16 @@ public class MainFrame extends JFrame{
 		
 		mnNetworkAnalysis.setIcon(new ImageIcon("src/images/ico/extra/net.png"));
 		
-		JMenuItem mntmNetwork = new JMenuItem("GML");
+		JMenuItem mntmNetwork = new JMenuItem("Visualization");
 		mnNetworkAnalysis.add(mntmNetwork);
 		mntmNetwork.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 		    	//Gephi gp = new Gephi("data/polblogs.gml","out_polblogs.pdf");
 		    	
-		    	new GephiRanking("data/lesmiserables.gml","out_lesmiserables.pdf");
-		    	new GephiRanking("data/PowerGrid.gml","outranking_PowerGrid.pdf");
+				Visualization viz = new Visualization();
+				viz.setVisible(true);
+				
+		    	
 		    	
 		 
 			}			
@@ -417,7 +480,14 @@ public class MainFrame extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 			   	try {
 			   		
-			     	
+			   		
+			   		load = new OutputGraph("Loading...","src/images/ico/extra/ajax_loading.gif");
+			   		load.dialog.setVisible(true);
+	        		final JPanel rinstalled = new JPanel();
+	        		int dialogButton = JOptionPane.YES_NO_OPTION;
+				    JOptionPane.showMessageDialog(rinstalled, "Make sure that RServe has been installed.", "R requirements", dialogButton);
+				    
+		
 			   		
 		        	//Rsession ss = Rsession.newInstanceTry(System.out,null);
 		        	rs = Rsession.newInstanceTry(System.out,RserverConf.parse("R://localhost"));
@@ -434,9 +504,12 @@ public class MainFrame extends JFrame{
 		        	if (rs.status == "Connecting..."){
 		        		mnR.setEnabled(true);
 		        		mntmPlotR.setEnabled(true);
+		        		load.dialog.setVisible(false);
 		        		final JPanel rconn = new JPanel();
 					    JOptionPane.showMessageDialog(rconn, "R Connector is successfully loaded.\n Go to \"Tools\" > \"R\" for R-based analysis tools.", "R connecting...",
 					    JOptionPane.INFORMATION_MESSAGE);
+					    				    
+					    
 		        	}
 		        		
 					
@@ -458,7 +531,7 @@ public class MainFrame extends JFrame{
 		mntmAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				   final JPanel panel = new JPanel();
-				    JOptionPane.showMessageDialog(panel, "Okapi - Integrated Data Analysis Toolkit \nCopyright (C) 2013 - INSERM U872 - Nutriomics Team \nDeveloper: Hoai-Tuong Nguyen", "About Okapi (R)",
+				    JOptionPane.showMessageDialog(panel, "Okapi - Integrated Data Analysis Toolkit \nCopyright (C) 2013 - INSERM U872 - Nutriomics Team \nDeveloper: Hoai-Tuong Nguyen", "About OKApi (R)",
 				    JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
@@ -519,7 +592,7 @@ public class MainFrame extends JFrame{
  		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
          table.setFillsViewportHeight(true);
          
-        
+         TableCellListener tcl = new TableCellListener(table, action);
         
 		tabledata = new JScrollPane(table);
 		tabledata.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS );
@@ -543,6 +616,39 @@ public class MainFrame extends JFrame{
         //mntmRedo.setEnabled(true);
 	}
 
+	Action action = new AbstractAction()
+	{
+	    public void actionPerformed(ActionEvent e)
+	    {
+	        TableCellListener tcl = (TableCellListener)e.getSource();
+	        System.out.println("Row   : " + tcl.getRow());
+	        System.out.println("Column: " + tcl.getColumn());
+	        System.out.println("Old   : " + tcl.getOldValue());
+	        System.out.println("New   : " + tcl.getNewValue());
+	        
+	        mntmUndo.setEnabled(table.getFocusTraversalKeysEnabled());
+	        
+	    }
+	};
 
+	
+	
+	
+	
+	public void keyPressed(KeyEvent e) {
+		
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

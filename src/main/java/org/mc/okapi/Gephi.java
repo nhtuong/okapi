@@ -45,8 +45,16 @@ import org.gephi.io.importer.api.Container;
 import org.gephi.io.importer.api.EdgeDefault;
 import org.gephi.io.importer.api.ImportController;
 import org.gephi.io.processor.plugin.DefaultProcessor;
+import org.gephi.layout.plugin.AbstractLayout;
 import org.gephi.layout.plugin.force.StepDisplacement;
 import org.gephi.layout.plugin.force.yifanHu.YifanHuLayout;
+import org.gephi.layout.plugin.forceAtlas2.ForceAtlas2;
+import org.gephi.layout.plugin.forceAtlas2.ForceAtlas2Builder;
+import org.gephi.layout.plugin.fruchterman.FruchtermanReingold;
+import org.gephi.layout.plugin.fruchterman.FruchtermanReingoldBuilder;
+import org.gephi.layout.plugin.labelAdjust.LabelAdjust;
+import org.gephi.layout.plugin.labelAdjust.LabelAdjustBuilder;
+import org.gephi.layout.spi.LayoutBuilder;
 import org.gephi.preview.api.PreviewController;
 import org.gephi.preview.api.PreviewModel;
 import org.gephi.preview.api.PreviewProperty;
@@ -62,7 +70,9 @@ import org.gephi.statistics.plugin.GraphDistance;
 import org.openide.util.Lookup;
 
 public class Gephi {
-	Gephi(String inFile, String outFile){
+	
+	
+	Gephi(String inFile, String outFile, String layoutType){
 
     	ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
     	pc.newProject();
@@ -109,18 +119,47 @@ public class Gephi {
     	System.out.println("Nodes: " + graphVisible.getNodeCount());
     	System.out.println("Edges: " + graphVisible.getEdgeCount());
     	 
-    	//Run YifanHuLayout for 100 passes - The layout always takes the current visible view
+    	
+    	
     	YifanHuLayout layout = new YifanHuLayout(null, new StepDisplacement(1f));
-    	layout.setGraphModel(graphModel);
-    	layout.resetPropertiesValues();
-    	layout.setOptimalDistance(200f);
-    	layout.initAlgo();
-    	 
-    	for (int i = 0; i < 100 && layout.canAlgo(); i++) {
-    	    layout.goAlgo();
+    	
+    	//Run YifanHuLayout for 100 passes - The layout always takes the current visible view
+    	if (layoutType=="Yifan Hu"){
+    		System.out.println("layoutType: " + layoutType);
+    		
+        	layout.setGraphModel(graphModel);
+        	layout.resetPropertiesValues();
+        	layout.initAlgo();
+        	 
+        	for (int i = 0; i < 100 && layout.canAlgo(); i++) {
+        	    layout.goAlgo();
+        	}
+        	layout.endAlgo();
     	}
-    	layout.endAlgo();
-    	 
+    	
+    	ForceAtlas2 layoutForceAtlas2 = new ForceAtlas2(new ForceAtlas2Builder());
+    	
+    	if (layoutType=="Force Atlas 2"){
+    		System.out.println("layoutType: " + layoutType);
+    		
+    		layoutForceAtlas2.setGraphModel(graphModel);
+    		layoutForceAtlas2.resetPropertiesValues();
+    		layoutForceAtlas2.setEdgeWeightInfluence(1.0);
+    		layoutForceAtlas2.setGravity(1.0);
+    		layoutForceAtlas2.setScalingRatio(2.0);
+    		layoutForceAtlas2.setBarnesHutTheta(1.2);
+    		layoutForceAtlas2.setJitterTolerance(0.1);
+
+    		for (int i = 0; i < 100 && layoutForceAtlas2.canAlgo(); i++) 
+    			layoutForceAtlas2.goAlgo();
+    	}
+    	
+
+    	
+ 
+       	
+    	
+    	
     	//Get Centrality
     	GraphDistance distance = new GraphDistance();
     	distance.setDirected(true);
