@@ -1,46 +1,79 @@
 package org.mc.okapi;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.EventQueue;
 
-import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.undo.UndoManager;
 
+import org.apache.commons.math.linear.BigMatrix;
+import org.apache.commons.math3.linear.FieldMatrix;
+import org.apache.commons.math3.linear.MatrixUtils;
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.stat.StatUtils;
+import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
+import org.apache.commons.math3.stat.inference.TestUtils;
 import org.math.R.RserverConf;
 import org.math.R.Rsession;
+import org.rosuda.REngine.REXPMismatchException;
 
-public class MainFrame extends JFrame{
+import au.com.bytecode.opencsv.CSVReader;
+
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyListener;
+import java.util.Arrays;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.awt.Toolkit;
+import java.awt.Rectangle;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.swing.table.*;
+import javax.swing.undo.UndoManager;
+
+import static org.math.R.Rsession.*;
+
+public class MainFrame extends JFrame implements KeyListener{
 
 	 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7145732470962037385L;
 	public JPanel contentPane;
 	public JScrollPane tabledata;
 	public String datafile;
@@ -106,6 +139,7 @@ public class MainFrame extends JFrame{
 		imp = new Import(this);
 		
 		mntmImport.addActionListener(new ActionListener() {
+			@SuppressWarnings("null")
 			public void actionPerformed(ActionEvent arg0) {
 				  try {
 					  
@@ -172,7 +206,14 @@ public class MainFrame extends JFrame{
 		mnEdit.setMnemonic('E');
 		menuBar.add(mnEdit);
 		
-      
+	      KeyStroke undo = KeyStroke.getKeyStroke(KeyEvent.VK_Z,ActionEvent.CTRL_MASK,false);
+
+	      KeyStroke redo = KeyStroke.getKeyStroke(KeyEvent.VK_Y,ActionEvent.CTRL_MASK,false);
+	
+	     
+	      addKeyListener(this);
+
+	      
 		mntmUndo = new JMenuItem("Undo");
 		mntmUndo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -347,10 +388,19 @@ public class MainFrame extends JFrame{
 				outfile = "data/plot.jpg";
 	        	rs.toJPEG(new File(outfile), 400, 400, cmd); //create jpeg file from R graphical command (like plot)
 	            
-	        	new OutputGraph(outfile);
+	        	OutputGraph og = new OutputGraph(outfile);
 	        	 
 	        	 
-	         	 
+	        	
+	        	/*String mean = "";
+				try {
+					mean = rs.eval("min(10,2,3)").asString();
+				} catch (REXPMismatchException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}*/
+
+	        	 
 	        	String html = rs.asHTML("rnorm(100)"); //format in html using R2HTML
 	    
 	        	
@@ -375,8 +425,8 @@ public class MainFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 		    	//Gephi gp = new Gephi("data/polblogs.gml","out_polblogs.pdf");
 		    	
-		    	new GephiRanking("data/lesmiserables.gml","out_lesmiserables.pdf");
-		    	new GephiRanking("data/PowerGrid.gml","outranking_PowerGrid.pdf");
+		    	GephiRanking gp = new GephiRanking("data/lesmiserables.gml","out_lesmiserables.pdf");
+		    	GephiRanking gpranking = new GephiRanking("data/PowerGrid.gml","outranking_PowerGrid.pdf");
 		    	
 		 
 			}			
@@ -519,6 +569,31 @@ public class MainFrame extends JFrame{
         //mntmRedo.setEnabled(true);
 	}
 
+	public void keyPressed(KeyEvent e) {
+		 System.out.println(udm.canUndo());
+		 System.out.println(udm.canRedo());
+		if (udm.canUndo())
+			mntmUndo.setEnabled(true);
+		else mntmUndo.setEnabled(false);
+		if (udm.canRedo())
+			mntmRedo.setEnabled(true);
+		else mntmRedo.setEnabled(false);
+		
+		if ((e.getKeyCode() == KeyEvent.VK_C) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+            System.out.println("wow");
+        }
+		
+		
+	}
 
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

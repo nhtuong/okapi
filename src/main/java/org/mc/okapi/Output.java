@@ -1,12 +1,20 @@
 package org.mc.okapi;
 
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.JTextField;
+import javax.swing.JTextArea;
+
+import java.awt.FlowLayout;
+import java.awt.CardLayout;
+
+import javax.swing.*;
 
 public class Output extends JFrame {
 

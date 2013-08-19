@@ -1,7 +1,9 @@
 package org.mc.okapi;
 
 import java.awt.EventQueue;
+
 import javax.swing.UIManager;
+
 import org.mc.okapi.MainFrame;
 import org.mc.okapi.Splash;
 
