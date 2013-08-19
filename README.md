@@ -31,17 +31,17 @@ Import data:
 ![OKAPI](src/images/screenshot/2-import-data-5.png "OKAPI")
 
 
-Edit data:
+#### Edit data:
 
 ![OKAPI](src/images/screenshot/2-edit-data-1.png "OKAPI")
 
 
-Export data:
+#### Export data:
 
 ![OKAPI](src/images/screenshot/3-export-data-1.png "OKAPI")
 ![OKAPI](src/images/screenshot/3-export-data-2.png "OKAPI")
 
-Correlation:
+#### Correlation:
 
 ![OKAPI](src/images/screenshot/4-tools-correlation-1.png "OKAPI")
 
@@ -53,7 +53,7 @@ Correlation:
 
 ![OKAPI](src/images/screenshot/4-tools-correlation-5.png "OKAPI")
 
-R Connector:
+#### R Connector:
 
 ![OKAPI](src/images/screenshot/5-R-connector-1.png "OKAPI")
 
