@@ -5,10 +5,10 @@ OKAPI
 Okapi is a cross-platform GUI omics data mining toolkit. 
 
 Features:
-- Import/export data file
-- Two-way analysis
-- Network analysis
-- R connector
+- Import/export data file (with Excel-like editor)
+- Two-way analysis (Correlation, export graph to file)
+- Network analysis (Visualization with Force Atlas, Yifan Hu layout)
+- R connector (Statistical testing: t Student, Wilcoxon)
 
 Getting started
 =====
