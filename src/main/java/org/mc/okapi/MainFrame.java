@@ -494,10 +494,11 @@ public class MainFrame extends JFrame implements KeyListener{
 				    
 		
 			   		
-		        	//Rsession ss = Rsession.newInstanceTry(System.out,null);
-		        	rs = Rsession.newInstanceTry(System.out,RserverConf.parse("R://localhost"));
+		        	rs = Rsession.newInstanceTry(System.out,null);
+		        	//rs = Rsession.newInstanceTry(System.out,RserverConf.parse("R://localhost"));
 		        	
-			   		
+	
+		        	
 			
 		    		//start Rserve
 		    		//Runtime.getRuntime().exec("CMD /C start R CMD Rserve");
