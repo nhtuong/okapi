@@ -2,7 +2,7 @@ OKAPI
 =====
 ![OKAPI](images/screenshot/1-splashscreen.png "OKAPI")
 
-Okapi is a GUI omics data mining toolkit. 
+Okapi is a cross-platform GUI omics data mining toolkit. 
 
 Features:
 - Import/export data file
