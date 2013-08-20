@@ -27,6 +27,7 @@ package org.mc.okapi;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import org.gephi.data.attributes.api.AttributeColumn;
 import org.gephi.data.attributes.api.AttributeController;
@@ -41,20 +42,17 @@ import org.gephi.graph.api.GraphModel;
 import org.gephi.graph.api.GraphView;
 import org.gephi.graph.api.UndirectedGraph;
 import org.gephi.io.exporter.api.ExportController;
+import org.gephi.io.exporter.preview.PDFExporter;
 import org.gephi.io.importer.api.Container;
 import org.gephi.io.importer.api.EdgeDefault;
 import org.gephi.io.importer.api.ImportController;
 import org.gephi.io.processor.plugin.DefaultProcessor;
-import org.gephi.layout.plugin.AbstractLayout;
+import org.gephi.layout.plugin.AutoLayout;
 import org.gephi.layout.plugin.force.StepDisplacement;
 import org.gephi.layout.plugin.force.yifanHu.YifanHuLayout;
+import org.gephi.layout.plugin.forceAtlas.ForceAtlasLayout;
 import org.gephi.layout.plugin.forceAtlas2.ForceAtlas2;
 import org.gephi.layout.plugin.forceAtlas2.ForceAtlas2Builder;
-import org.gephi.layout.plugin.fruchterman.FruchtermanReingold;
-import org.gephi.layout.plugin.fruchterman.FruchtermanReingoldBuilder;
-import org.gephi.layout.plugin.labelAdjust.LabelAdjust;
-import org.gephi.layout.plugin.labelAdjust.LabelAdjustBuilder;
-import org.gephi.layout.spi.LayoutBuilder;
 import org.gephi.preview.api.PreviewController;
 import org.gephi.preview.api.PreviewModel;
 import org.gephi.preview.api.PreviewProperty;
@@ -69,10 +67,12 @@ import org.gephi.ranking.plugin.transformer.AbstractSizeTransformer;
 import org.gephi.statistics.plugin.GraphDistance;
 import org.openide.util.Lookup;
 
+import com.itextpdf.text.PageSize;
+
 public class Gephi {
 	
 	
-	Gephi(String inFile, String outFile, String layoutType){
+	Gephi(String inFile, String outFile, String layoutType) throws IOException{
 
     	ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
     	pc.newProject();
@@ -121,10 +121,11 @@ public class Gephi {
     	 
     	
     	
-    	YifanHuLayout layout = new YifanHuLayout(null, new StepDisplacement(1f));
+    	/*YifanHuLayout layout = new YifanHuLayout(null, new StepDisplacement(1f));
     	
     	//Run YifanHuLayout for 100 passes - The layout always takes the current visible view
     	if (layoutType=="Yifan Hu"){
+    		
     		System.out.println("layoutType: " + layoutType);
     		
         	layout.setGraphModel(graphModel);
@@ -135,11 +136,12 @@ public class Gephi {
         	    layout.goAlgo();
         	}
         	layout.endAlgo();
-    	}
+    	}*/
     	
-    	ForceAtlas2 layoutForceAtlas2 = new ForceAtlas2(new ForceAtlas2Builder());
+    	/*ForceAtlas2 layoutForceAtlas2 = new ForceAtlas2(new ForceAtlas2Builder());
     	
-    	if (layoutType=="Force Atlas 2"){
+    	//if (layoutType=="Force Atlas 2"){
+    		
     		System.out.println("layoutType: " + layoutType);
     		
     		layoutForceAtlas2.setGraphModel(graphModel);
@@ -152,10 +154,14 @@ public class Gephi {
 
     		for (int i = 0; i < 100 && layoutForceAtlas2.canAlgo(); i++) 
     			layoutForceAtlas2.goAlgo();
-    	}
+    	//}
     	
-
+    	*/
     	
+    	if (layoutType=="Yifan Hu")
+    		DoYifanHuLayout(graphModel,1);
+    	if (layoutType=="Force Atlas 2")
+    		DoForceAtlasLayout(graphModel);
  
        	
     	
@@ -186,6 +192,7 @@ public class Gephi {
     	model.getProperties().putValue(PreviewProperty.NODE_LABEL_FONT, model.getProperties().getFontValue(PreviewProperty.NODE_LABEL_FONT).deriveFont(8));
     	 
     	//Export
+    	//CreatePDFFile(workspace, outFile);
     	ExportController ec = Lookup.getDefault().lookup(ExportController.class);
     	try {
     	    ec.exportFile(new File(outFile));
@@ -194,4 +201,57 @@ public class Gephi {
     	    return;
     	}
 	}
+	
+	 public void DoYifanHuLayout(GraphModel graphModel, int minutes) {
+		 
+
+         YifanHuLayout layout = new YifanHuLayout(null, new StepDisplacement(1f));
+ 
+ 		
+     	layout.setGraphModel(graphModel);
+     	layout.resetPropertiesValues();
+     	layout.initAlgo();
+     	 
+     	for (int i = 0; i < 100 && layout.canAlgo(); i++) {
+     	    layout.goAlgo();
+     	}
+     	layout.endAlgo();
+     	
+
+	 }
+	 
+	 public void DoForceAtlasLayout(GraphModel graphModel) {
+		ForceAtlas2 layoutForceAtlas2 = new ForceAtlas2(new ForceAtlas2Builder());
+ 		layoutForceAtlas2.setGraphModel(graphModel);
+ 		layoutForceAtlas2.resetPropertiesValues();
+ 		layoutForceAtlas2.setEdgeWeightInfluence(1.0);
+ 		layoutForceAtlas2.setGravity(1.0);
+ 		layoutForceAtlas2.setScalingRatio(2.0);
+ 		layoutForceAtlas2.setBarnesHutTheta(1.2);
+ 		layoutForceAtlas2.setJitterTolerance(0.1);
+
+ 		for (int i = 0; i < 100 && layoutForceAtlas2.canAlgo(); i++) 
+ 			layoutForceAtlas2.goAlgo();
+ 		
+ 		
+	 }
+	 
+	 public void CreatePDFFile(Workspace workspace, String filename) throws IOException {
+	        if (filename == null || "".equals(filename)) {
+	            throw new IOException("Invalid file name.");
+	        } else {
+	            ExportController ec = Lookup.getDefault().lookup(ExportController.class);
+	            PDFExporter pdfExporter = (PDFExporter) ec.getExporter("pdf");
+	            pdfExporter.setPageSize(PageSize.A0);
+	            pdfExporter.setWorkspace(workspace);
+	            try {
+	               ec.exportFile(new File(filename+".pdf"));
+	            } catch (IOException ex) {
+	               ex.printStackTrace();
+	               return;
+	            }
+	        }
+	    }
+	 
+	 
 }

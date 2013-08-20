@@ -133,15 +133,20 @@ public class MainFrame extends JFrame implements KeyListener{
 	
 	public OutputGraph load;
 	private TestR tr;
+	private String okapititle;
+	private String version;
 	
 	/**
 	 * Create the frame.
 	 */
 	public MainFrame() {
-		setTitle("Okapi (R) - Integrated Data Mining Toolkit - v0.0.1");
+		okapititle = "Okapi (R) - a GUI Omics Data Mining Toolkit";
+		version = "v0.0.2";
+		setTitle(okapititle+" - "+version);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("src/images/ico/extra/science_32.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setBounds(100, 100, 450, 300);
+		setLocationRelativeTo(null);
+	    setMinimumSize(new Dimension(500, 300)); 
 		setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
 		
 		
@@ -531,7 +536,7 @@ public class MainFrame extends JFrame implements KeyListener{
 		mntmAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				   final JPanel panel = new JPanel();
-				    JOptionPane.showMessageDialog(panel, "Okapi - Integrated Data Analysis Toolkit \nCopyright (C) 2013 - INSERM U872 - Nutriomics Team \nDeveloper: Hoai-Tuong Nguyen", "About OKApi (R)",
+				    JOptionPane.showMessageDialog(panel, okapititle+" - "+version +"\nCopyright (C) 2013 - INSERM U872 - Nutriomics Team \nDeveloper: Hoai-Tuong Nguyen", "About Okapi (R)",
 				    JOptionPane.INFORMATION_MESSAGE);
 			}
 		});

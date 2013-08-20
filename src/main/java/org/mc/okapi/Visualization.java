@@ -139,7 +139,12 @@ public class Visualization extends JFrame {
 		btnVisualize = new JButton("Visualize...");
 		btnVisualize.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Gephi gp = new Gephi(txInfile.getText(),tfOutfile.getText(), String.valueOf(cbLayout.getSelectedItem()));
+				try {
+					Gephi gp = new Gephi(txInfile.getText(),tfOutfile.getText(), String.valueOf(cbLayout.getSelectedItem()));
+				} catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 				System.out.println(String.valueOf(cbLayout.getSelectedItem()));
 				try {
 					Desktop.getDesktop().open(new File(tfOutfile.getText()));
@@ -169,7 +174,6 @@ public class Visualization extends JFrame {
 		cbLayout = new JComboBox();
 		cbLayout.setBounds(153, 86, 182, 23);
 		cbLayout.addItem("Force Atlas 2");
-		cbLayout.addItem("Fruchterman Reingold");
 		cbLayout.addItem("Yifan Hu");
 		
 		contentPane.add(cbLayout);
