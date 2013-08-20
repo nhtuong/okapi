@@ -26,6 +26,7 @@ Hoai-Tuong Nguyen <hoai-tuong.nguyen@inserm.fr>
 package org.mc.okapi;
 
 import java.awt.Desktop;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -60,7 +61,7 @@ public class Visualization extends JFrame {
 	 */
 	public Visualization() {
 		setTitle("Visualization");
-		
+		setIconImage(Toolkit.getDefaultToolkit().getImage("images/ico/extra/science_32.png"));
 		setBounds(100, 100, 450, 189);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

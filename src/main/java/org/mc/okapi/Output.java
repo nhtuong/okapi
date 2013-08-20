@@ -24,6 +24,8 @@ Hoai-Tuong Nguyen <hoai-tuong.nguyen@inserm.fr>
 
 package org.mc.okapi;
 
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -44,7 +46,7 @@ public class Output extends JFrame {
 	public Output(String content) {
 		JPanel middlePanel = new JPanel ();
 	    middlePanel.setBorder ( new TitledBorder ( new EtchedBorder (), "Output message" ) );
-
+	    setIconImage(Toolkit.getDefaultToolkit().getImage("images/ico/extra/science_32.png"));
 	    // create the middle panel components
 
 	    display = new JTextArea ( 16, 58 );

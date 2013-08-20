@@ -24,6 +24,8 @@ Hoai-Tuong Nguyen <hoai-tuong.nguyen@inserm.fr>
 
 package org.mc.okapi;
 
+import java.awt.Toolkit;
+
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -33,6 +35,7 @@ import javax.swing.JPanel;
 public class OutputGraph extends JFrame  {
 	public JFrame dialog;
 	public OutputGraph(String title, String img){
+		setIconImage(Toolkit.getDefaultToolkit().getImage("images/ico/extra/science_32.png"));
 		dialog = new JFrame();
     	JLabel label = new JLabel();
     	label.setIcon(new ImageIcon(img));

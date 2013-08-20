@@ -47,7 +47,7 @@ public class Splash extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setUndecorated(true);
-        img = new ImageIcon("src/images/ico/extra/micro-human-mice.gif");
+        img = new ImageIcon("images/ico/extra/micro-human-mice.gif");
         imglabel = new JLabel(img);
         add(imglabel);
         setLayout(null);

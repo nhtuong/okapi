@@ -67,7 +67,7 @@ public class PieChart extends JFrame {
 		        
 	        // we put the chart into a panel
 	        ChartPanel chartPanel = new ChartPanel(chart);
-	        setIconImage(Toolkit.getDefaultToolkit().getImage("src/images/ico/extra/science_32.png"));
+	        setIconImage(Toolkit.getDefaultToolkit().getImage("images/ico/extra/science_32.png"));
 	        // default size
 	        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
 	        // add it to our application

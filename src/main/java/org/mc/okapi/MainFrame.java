@@ -143,7 +143,7 @@ public class MainFrame extends JFrame implements KeyListener{
 		okapititle = "Okapi (R) - a GUI Omics Data Mining Toolkit";
 		version = "v0.0.2";
 		setTitle(okapititle+" - "+version);
-		setIconImage(Toolkit.getDefaultToolkit().getImage("src/images/ico/extra/science_32.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("images/ico/extra/science_32.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 	    setMinimumSize(new Dimension(500, 300)); 
@@ -202,7 +202,7 @@ public class MainFrame extends JFrame implements KeyListener{
 			    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
 			}
 		});
-		mntmImport.setIcon(new ImageIcon("src/images/ico/extra/database_add.png"));
+		mntmImport.setIcon(new ImageIcon("images/ico/extra/database_add.png"));
 		mnFile.add(mntmImport);
 		
 		mntmExport = new JMenuItem("Export...");
@@ -229,11 +229,11 @@ public class MainFrame extends JFrame implements KeyListener{
 			}
 		});
 		mntmExport.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
-		mntmExport.setIcon(new ImageIcon("src/images/ico/extra/database_go.png"));
+		mntmExport.setIcon(new ImageIcon("images/ico/extra/database_go.png"));
 		mnFile.add(mntmExport);
 		
 		mntmExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
-		mntmExit.setIcon(new ImageIcon("src/images/ico/extra/door_out.png"));
+		mntmExit.setIcon(new ImageIcon("images/ico/extra/door_out.png"));
 		mnFile.add(mntmExit);
 		
 		JMenu mnEdit = new JMenu("Edit");
@@ -261,7 +261,7 @@ public class MainFrame extends JFrame implements KeyListener{
 	
 		mntmUndo.setEnabled(false);
 		mntmUndo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK));
-		mntmUndo.setIcon(new ImageIcon("src/images/ico/extra/arrow_undo.png"));
+		mntmUndo.setIcon(new ImageIcon("images/ico/extra/arrow_undo.png"));
 		mnEdit.add(mntmUndo);
 		
 		mntmRedo = new JMenuItem("Redo");
@@ -275,7 +275,7 @@ public class MainFrame extends JFrame implements KeyListener{
 		});
 		mntmRedo.setEnabled(false);
 		mntmRedo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_MASK));
-		mntmRedo.setIcon(new ImageIcon("src/images/ico/extra/arrow_redo.png"));
+		mntmRedo.setIcon(new ImageIcon("images/ico/extra/arrow_redo.png"));
 		mnEdit.add(mntmRedo);
 		
 		system = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -290,7 +290,7 @@ public class MainFrame extends JFrame implements KeyListener{
 		});
 		mntmCopy.setEnabled(false);
 		mntmCopy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
-		mntmCopy.setIcon(new ImageIcon("src/images/ico/extra/page_copy.png"));
+		mntmCopy.setIcon(new ImageIcon("images/ico/extra/page_copy.png"));
 		mnEdit.add(mntmCopy);
 		
 		mntmCut = new JMenuItem("Cut");
@@ -303,7 +303,7 @@ public class MainFrame extends JFrame implements KeyListener{
 		});
 		mntmCut.setEnabled(false);
 		mntmCut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
-		mntmCut.setIcon(new ImageIcon("src/images/ico/extra/cut.png"));
+		mntmCut.setIcon(new ImageIcon("images/ico/extra/cut.png"));
 		mnEdit.add(mntmCut);
 		
 		mntmPaste = new JMenuItem("Paste");
@@ -316,7 +316,7 @@ public class MainFrame extends JFrame implements KeyListener{
 
 		mntmPaste.setEnabled(false);
 		mntmPaste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
-		mntmPaste.setIcon(new ImageIcon("src/images/ico/extra/paste_plain.png"));
+		mntmPaste.setIcon(new ImageIcon("images/ico/extra/paste_plain.png"));
 		mnEdit.add(mntmPaste);
 		
 		JMenu mnTools = new JMenu("Tools");
@@ -327,7 +327,7 @@ public class MainFrame extends JFrame implements KeyListener{
 		mnTwowayAnalysis = new JMenu("Two-way Analysis");
 		mnTools.add(mnTwowayAnalysis);
 		mnTwowayAnalysis.setEnabled(false);
-		mnTwowayAnalysis.setIcon(new ImageIcon("src/images/ico/extra/two-way.jpeg"));
+		mnTwowayAnalysis.setIcon(new ImageIcon("images/ico/extra/two-way.jpeg"));
 		
 		JMenuItem mntmPiechart = new JMenuItem("PieChart");
 		mntmPiechart.setEnabled(false);
@@ -345,7 +345,7 @@ public class MainFrame extends JFrame implements KeyListener{
 				
 			}
 		});
-		mntmPiechart.setIcon(new ImageIcon("src/images/ico/extra/pie_chart.png"));
+		mntmPiechart.setIcon(new ImageIcon("images/ico/extra/pie_chart.png"));
 		
 		mntmCorrelation = new JMenuItem("Correlation");
 		mnTwowayAnalysis.add(mntmCorrelation);
@@ -403,13 +403,13 @@ public class MainFrame extends JFrame implements KeyListener{
 		    	
 			}
 		});
-		mntmCorrelation.setIcon(new ImageIcon("src/images/ico/extra/cor.png"));
+		mntmCorrelation.setIcon(new ImageIcon("images/ico/extra/cor.png"));
 		
 		mntmCorrelation.setEnabled(false);
 		
 		mnR = new JMenu("R");
 		mnTools.add(mnR);
-		mnR.setIcon(new ImageIcon("src/images/ico/extra/r.png"));
+		mnR.setIcon(new ImageIcon("images/ico/extra/r.png"));
 		mnR.setEnabled(false);
 		
 		tr = new TestR(this);
@@ -457,7 +457,7 @@ public class MainFrame extends JFrame implements KeyListener{
 		JMenu mnNetworkAnalysis = new JMenu("Network Analysis");
 		mnTools.add(mnNetworkAnalysis);
 		
-		mnNetworkAnalysis.setIcon(new ImageIcon("src/images/ico/extra/net.png"));
+		mnNetworkAnalysis.setIcon(new ImageIcon("images/ico/extra/net.png"));
 		
 		JMenuItem mntmNetwork = new JMenuItem("Visualization");
 		mnNetworkAnalysis.add(mntmNetwork);
@@ -473,7 +473,7 @@ public class MainFrame extends JFrame implements KeyListener{
 		 
 			}			
 		});
-		//mntmNetwork.setIcon(new ImageIcon("src/images/ico/extra/net.png"));
+		//mntmNetwork.setIcon(new ImageIcon("images/ico/extra/net.png"));
 		
 		mnPreferences = new JMenu("Preferences");
 		mnPreferences.setMnemonic('P');
@@ -486,7 +486,7 @@ public class MainFrame extends JFrame implements KeyListener{
 			   	try {
 			   		
 			   		
-			   		load = new OutputGraph("Loading...","src/images/ico/extra/ajax_loading.gif");
+			   		load = new OutputGraph("Loading...","images/ico/extra/ajax_loading.gif");
 			   		load.dialog.setVisible(true);
 	        		final JPanel rinstalled = new JPanel();
 	        		int dialogButton = JOptionPane.YES_NO_OPTION;
@@ -526,7 +526,7 @@ public class MainFrame extends JFrame implements KeyListener{
 
 			}
 		});
-		mnRConnector.setIcon(new ImageIcon("src/images/ico/extra/r.png"));
+		mnRConnector.setIcon(new ImageIcon("images/ico/extra/r.png"));
 		
 		JMenu mnHelps = new JMenu("Helps");
 		mnHelps.setMnemonic('H');
@@ -543,15 +543,15 @@ public class MainFrame extends JFrame implements KeyListener{
 		
 		JMenuItem mntmUserGuide = new JMenuItem("User Guide");
 		mntmUserGuide.setEnabled(false);
-		mntmUserGuide.setIcon(new ImageIcon("src/images/ico/extra/help.png"));
+		mntmUserGuide.setIcon(new ImageIcon("images/ico/extra/help.png"));
 		mnHelps.add(mntmUserGuide);
 		
 		JMenuItem mntmUpdates = new JMenuItem("Updates");
 		mntmUpdates.setEnabled(false);
-		mntmUpdates.setIcon(new ImageIcon("src/images/ico/extra/arrow_refresh.png"));
+		mntmUpdates.setIcon(new ImageIcon("images/ico/extra/arrow_refresh.png"));
 		mnHelps.add(mntmUpdates);
 		
-		mntmAbout.setIcon(new ImageIcon("src/images/ico/extra/information.png"));
+		mntmAbout.setIcon(new ImageIcon("images/ico/extra/information.png"));
 		mnHelps.add(mntmAbout);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -61,7 +61,7 @@ public class TestR extends JDialog {
 	public TestR(final MainFrame mf) {
 
 		setTitle("Pairewise Testing...");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("src/images/ico/extra/science_32.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("images/ico/extra/science_32.png"));
 		setBounds(100, 100, 450, 140);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
