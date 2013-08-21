@@ -44,7 +44,7 @@ public class RConnector extends JFrame {
 		
 		this.mf = mf;
 		
-		JLabel lblRscript = new JLabel("Path Rscript path:");
+		JLabel lblRscript = new JLabel("Path to Rscript:");
 		lblRscript.setBounds(10, 12, 133, 14);
 		contentPane.add(lblRscript);
 		
