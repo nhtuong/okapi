@@ -48,7 +48,7 @@ public class CSVTableView {
        for (int i = 0; i < numCols; i++) {
            out.write(sep);
            out.write(dtm.getColumnName(i));
-           sep = ",";
+           sep = ";";
        }
 
        out.write(LINE_SEP);
@@ -59,7 +59,7 @@ public class CSVTableView {
            for (int c = 0; c < numCols; c++) {
                out.write(sep);
                out.write(dtm.getValueAt(r, c).toString());
-               sep = ",";
+               sep = ";";
            }
 
            out.write(LINE_SEP);

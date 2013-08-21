@@ -57,6 +57,8 @@ Screenshots
 
 ![OKAPI](images/screenshot/5-R-connector-1.png "OKAPI")
 
+![OKAPI](images/screenshot/5-R-connector-1bis.png "OKAPI")
+
 ![OKAPI](images/screenshot/5-R-connector-2.png "OKAPI")
 
 ![OKAPI](images/screenshot/5-R-connector-3.png "OKAPI")

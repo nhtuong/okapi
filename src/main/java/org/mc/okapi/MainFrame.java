@@ -25,77 +25,39 @@ Hoai-Tuong Nguyen <hoai-tuong.nguyen@inserm.fr>
 package org.mc.okapi;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-
-import org.apache.commons.math.linear.BigMatrix;
-import org.apache.commons.math3.linear.FieldMatrix;
-import org.apache.commons.math3.linear.MatrixUtils;
-import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.stat.StatUtils;
-import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
-import org.apache.commons.math3.stat.inference.TestUtils;
-import org.math.R.RserverConf;
-import org.math.R.Rsession;
-import org.rosuda.REngine.REXPMismatchException;
-
-import au.com.bytecode.opencsv.CSVReader;
-
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
-import java.awt.event.KeyEvent;
-import java.awt.event.InputEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyListener;
-import java.util.Arrays;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.awt.Toolkit;
-import java.awt.Rectangle;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URL;
-
-import javax.swing.table.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.undo.UndoManager;
 
-import static org.math.R.Rsession.*;
+import org.math.R.Rsession;
 
 public class MainFrame extends JFrame implements KeyListener{
 
@@ -135,6 +97,9 @@ public class MainFrame extends JFrame implements KeyListener{
 	private TestR tr;
 	private String okapititle;
 	private String version;
+
+	
+	private RConnector rc;
 	
 	/**
 	 * Create the frame.
@@ -479,50 +444,29 @@ public class MainFrame extends JFrame implements KeyListener{
 		mnPreferences.setMnemonic('P');
 		menuBar.add(mnPreferences);
 		
+		rc = new RConnector(this);
+		
 		mnRConnector = new JMenuItem("R Connector");
 		mnPreferences.add(mnRConnector);
 		mnRConnector.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			   	try {
 			   		
-			   		
-			   		load = new OutputGraph("Loading...","images/ico/extra/ajax_loading.gif");
-			   		load.dialog.setVisible(true);
-	        		final JPanel rinstalled = new JPanel();
-	        		int dialogButton = JOptionPane.YES_NO_OPTION;
-				    JOptionPane.showMessageDialog(rinstalled, "Make sure that RServe has been installed.", "R requirements", dialogButton);
-				    
-		
-			   		
-		        	rs = Rsession.newInstanceTry(System.out,null);
-		        	//rs = Rsession.newInstanceTry(System.out,RserverConf.parse("R://localhost"));
-		        	
-	
-		        	
-			
-		    		//start Rserve
-		    		//Runtime.getRuntime().exec("CMD /C start R CMD Rserve");
-		            //Thread.sleep(1000);
-		    		
-		            
-		   
-		        	
-		        	if (rs.status == "Connecting..."){
-		        		mnR.setEnabled(true);
-		        		mntmPlotR.setEnabled(true);
-		        		load.dialog.setVisible(false);
-		        		final JPanel rconn = new JPanel();
-					    JOptionPane.showMessageDialog(rconn, "R Connector is successfully loaded.\n Go to \"Tools\" > \"R\" for R-based analysis tools.", "R connecting...",
-					    JOptionPane.INFORMATION_MESSAGE);
-					    				    
-					    
-		        	}
-		        		
+
+			   		rc.setVisible(true);
+					
+					
+
 					
 					
 				
 		    	} catch (Exception e) {
-		    		Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, e);
+		    		
+	        		final JPanel rconne = new JPanel();
+				    JOptionPane.showMessageDialog(rconne, e.getMessage(), "R connecting...",
+				    JOptionPane.INFORMATION_MESSAGE);
+				    
+		    		Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, e.getMessage());
 		    	}
 
 			}

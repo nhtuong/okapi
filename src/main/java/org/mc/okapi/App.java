@@ -25,11 +25,10 @@ Hoai-Tuong Nguyen <hoai-tuong.nguyen@inserm.fr>
 package org.mc.okapi;
 
 import java.awt.EventQueue;
+import java.io.IOException;
 
 import javax.swing.UIManager;
 
-import org.mc.okapi.MainFrame;
-import org.mc.okapi.Splash;
 
 /**
  * Hello world!
@@ -37,10 +36,11 @@ import org.mc.okapi.Splash;
  */
 public class App 
 {
-    public static void main( String[] args ) throws InterruptedException
+    public static void main( String[] args ) throws InterruptedException, SecurityException, IOException
     {
     	
-
+    	
+    	
    	 try { 
    	        UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"); 
    	    } 
@@ -53,7 +53,6 @@ public class App
      t.sleep(1000);
      s.dispose();
 
-     
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

@@ -93,7 +93,7 @@ public class TestR extends JDialog {
 					
 					mf.rs.set("x", X);
 					mf.rs.set("y", Y);
-					mf.rs.set("xlab", cbY.getSelectedItem().toString());
+					mf.rs.set("xlab", cbX.getSelectedItem().toString());
 					mf.rs.set("ylab", cbY.getSelectedItem().toString());
 					
 					mf.rs.eval("cor<-cor(x,y)");
