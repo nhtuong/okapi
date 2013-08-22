@@ -10,10 +10,17 @@ Features:
 - Network analysis (Visualization with Force Atlas, Yifan Hu layout)
 - R connector (Statistical testing: t Student, Wilcoxon)
 
+
+Download
+=====
+https://github.com/nhtuong/okapi/releases
+
+
 Getting started
 =====
 
 See more in https://github.com/nhtuong/okapi/wiki
+
 
 Screenshots
 =====
