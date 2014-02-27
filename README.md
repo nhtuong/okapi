@@ -1,4 +1,4 @@
-OKAPI
+OKAPI Omics Toolkit
 =====
 ![OKAPI](images/screenshot/1-splashscreen.png "OKAPI")
 
