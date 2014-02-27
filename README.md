@@ -1,4 +1,4 @@
-OKAPI Omics Toolkit
+OKAPI Omics Mining Toolkit
 =====
 ![OKAPI](images/screenshot/1-splashscreen.png "OKAPI")
 
